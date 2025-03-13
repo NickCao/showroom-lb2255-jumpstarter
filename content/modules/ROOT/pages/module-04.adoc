@@ -21,9 +21,32 @@ NOTE: While the image is stored in a private bucket, jumpstarter would take care
 ----
 jmp client shell --selector jumpstarter.dev/board=virtual
 ----
-NOTE: Your shell prompt would be changed to "<placeholder>" to indicate that you are in a jumpstarer session
++
+NOTE: Your shell prompt would be changed to "<placeholder>" to indicate that you are in a jumpstarter session
+
+. Flash the image
+
++
+[source,bash]
+----
+j flasher flash --scheme s3 --endpoint $(mc alias export minio | jq -r .url) --bucket $USER <name of image file>
+----
++
+NOTE: The `j` command is only available in a jumpstarter shell session, it is dynamically generated based on the interfaces available on the connected device.
 
 == Interact with the DUT remotely, using the Jumpstarter CLI
+
+Now that the image is flashed, we can boot and interact with the virtual device with the `j` CLI.
+
++
+[source,bash]
+----
+j power on
+j console start-console
+----
++
+
+You would be dropped into a serial console with the boot messages showing up, and presented with a login prompt shortly after. You can login with the default username "jumpstarter" and password "password", and feel free to explore the RHIVOS environment on you own.
 
 == Write tests to validate the application
 
