@@ -9,7 +9,7 @@ In the previous section, we've build an RHIVOS image and pushed it to minio, and
 +
 [source,bash]
 ----
-mc ls minio/$USER
+mc ls minio/$S3_BUCKET
 ----
 +
 NOTE: While the image is stored in a private bucket, jumpstarter would take care of generating presigned URLs so that the exporter can access it without prior configuration.
@@ -29,7 +29,7 @@ NOTE: Your shell prompt would be changed to "<placeholder>" to indicate that you
 +
 [source,bash]
 ----
-j flasher flash --scheme s3 --endpoint $(mc alias export minio | jq -r .url) --bucket $USER <name of image file>
+j flasher flash --scheme s3 --endpoint $S3_ENDPOINT --bucket $S3_BUCKET <name of image file>
 ----
 +
 NOTE: The `j` command is only available in a jumpstarter shell session, it is dynamically generated based on the interfaces available on the connected device.
@@ -38,16 +38,55 @@ NOTE: The `j` command is only available in a jumpstarter shell session, it is dy
 
 Now that the image is flashed, we can boot and interact with the virtual device with the `j` CLI.
 
-+
 [source,bash]
 ----
 j power on
 j console start-console
 ----
-+
 
 You would be dropped into a serial console with the boot messages showing up, and presented with a login prompt shortly after. You can login with the default username "jumpstarter" and password "password", and feel free to explore the RHIVOS environment on you own.
 
+When you are done, exit the console by pressing Ctrl+B 3 times, and you would be dropped back to the jumpstarter shell session.
+
 == Write tests to validate the application
+
+While the jumpstarter CLI interface is well suited for interactive development and testing, it also provides a python API for scripted testing. You may write your test as a regular python script, or in pytest.
+
+[source,python]
+----
+from jumpstarter.common.utils import env
+from opendal import Operator
+from os import getenv
+import sys
+
+with env() as dut: # reuse the jumpstarter shell session
+  dut.power.off()
+
+  dut.flasher.flash(
+    "<name of image file>",
+    operator=Operator(
+      "s3",
+      endpoint=getenv("S3_ENDPOINT"),
+      bucket=getenv("S3_BUCKET"),
+    ),
+  )
+
+  dut.power.on()
+
+  with qemu.console.pexpect() as p:
+      p.logfile = sys.stdout.buffer # forward console output to stdout
+      # login into the dut
+      p.expect_exact(f"dut login:", timeout=600)
+      p.sendline("jumpstarter")
+      p.expect_exact("Password:")
+      p.sendline("password")
+      # wait for the shell prompt
+      p.expect_exact(f"[jumpstarter@dut ~]$")
+      # execute test commands
+      p.sendline("echo hello from dut")
+      p.expect_exact(f"[jumpstarter@dut ~]$")
+
+  dut.power.off()
+----
 
 == Run the written tests in pipelines
