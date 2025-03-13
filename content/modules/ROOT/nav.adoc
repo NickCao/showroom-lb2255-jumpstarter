@@ -5,3 +5,7 @@
 * xref:module-02.adoc[2. GitHub Sourced Container]
 ** xref:module-02.adoc#prerequisites[Install Prerequisites]
 ** xref:module-02.adoc#container[Enable Container]
+
+* xref:module-03.adoc[3. Build a simple automotive application]
+
+* xref:module-04.adoc[4. Test and automate with HIL]

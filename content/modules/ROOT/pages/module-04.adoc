@@ -1,0 +1,9 @@
+# Test and automate with HIL
+
+## Deploy the OS image using Jumpstarter and do some simple hardware-in-the-loop (HIL) testing
+
+## Interact with the DUT remotely, using the Jumpstarter CLI
+
+## Write tests to validate the application
+
+## Run the written tests in pipelines

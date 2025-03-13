@@ -1,0 +1,7 @@
+# Build a simple automotive application
+
+## Use the Red Hat Developer Hub and templates to quickly set up a developer workspace
+
+## Build and test the application in the cloud
+
+## Build a new RHIVOS image including the sample application
