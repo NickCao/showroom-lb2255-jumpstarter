@@ -1,9 +1,30 @@
-# Test and automate with HIL
+= Test and automate with HIL
 
-## Deploy the OS image using Jumpstarter and do some simple hardware-in-the-loop (HIL) testing
+== Deploy the OS image using Jumpstarter and do some simple hardware-in-the-loop (HIL) testing
 
-## Interact with the DUT remotely, using the Jumpstarter CLI
+In the previous section, we've build an RHIVOS image and pushed it to minio, and now we can flash the image to the virtual hardware for further testing.
 
-## Write tests to validate the application
+. Verify the image is uploaded
 
-## Run the written tests in pipelines
++
+[source,bash]
+----
+mc ls minio/$USER
+----
++
+NOTE: While the image is stored in a private bucket, jumpstarter would take care of generating presigned URLs so that the exporter can access it without prior configuration.
+
+. Enter a jumpstarter shell session connecting to the designated virtual device
+
++
+[source,bash]
+----
+jmp client shell --selector jumpstarter.dev/board=virtual
+----
+NOTE: Your shell prompt would be changed to "<placeholder>" to indicate that you are in a jumpstarer session
+
+== Interact with the DUT remotely, using the Jumpstarter CLI
+
+== Write tests to validate the application
+
+== Run the written tests in pipelines
