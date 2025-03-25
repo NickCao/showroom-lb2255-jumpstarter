@@ -95,6 +95,7 @@ j power off
 
 TIP: Nothing actually happens because we are using a mock power driver, but have we configured it with a real power driver, e.g. a USB power relay, you could see the device under test being turned on and off.
 
+In this secion, we've learned how to configure Jumpstarter for local developement and how to interact with the device under test via the `j` command. If you still have time, explore the other subcommands (`j flasher`/`j console`)
 
 == Deploy the OS image using Jumpstarter and do some simple hardware-in-the-loop (HIL) testing
 
