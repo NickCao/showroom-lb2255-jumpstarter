@@ -1,5 +1,23 @@
 = Test and automate with HIL
 
+== First steps with Jumpstarter
+
+Jumpstarter is already pre-installed in the developer workspace, you can check for it with
+
+[source,bash]
+----
+jmp version
+----
+
+Jumpstarter interacts with hardware interfaces through "drivers", drivers are written in python to make use of the vast ecosystem of existing python packages. While you can always extend Jumpstarter by writing your own drivers, it comes with a collection of general purpose drivers to help you get started.
+
+[source,bash]
+----
+jmp driver list
+----
+
+TIP: Among the drivers you would notice a few with "mock" in their names, while these mock drivers do not provide access to the hardware, they are useful in showcasing the capability of Jumpstarter
+
 == Deploy the OS image using Jumpstarter and do some simple hardware-in-the-loop (HIL) testing
 
 In the previous section, we've build an RHIVOS image and pushed it to minio, and now we can flash the image to the virtual hardware for further testing.
@@ -44,7 +62,7 @@ j power on
 j console start-console
 ----
 
-You would be dropped into a serial console with the boot messages showing up, and presented with a login prompt shortly after. You can login with the default username "jumpstarter" and password "password", and feel free to explore the RHIVOS environment on you own.
+You would be dropped into a serial console with the boot messages showing up, and presented with a login prompt shortly after. You can login with the default username "jumpstarter" and password "password", and feel free to explore the RHIVOS environment on your own.
 
 When you are done, exit the console by pressing Ctrl+B 3 times, and you would be dropped back to the jumpstarter shell session.
 
