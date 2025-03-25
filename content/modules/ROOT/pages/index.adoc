@@ -33,6 +33,6 @@ This lab consists of 3 modules.
 
 === Lab Access
 
-The lab can be accesses through Red Hat Developer Hub, you can login into the assigned Dev Space, a Kubernetes-based Cloud Development Environment, with the credentials printed on the sticker attached to your laptop.
+The lab can be accesses through Red Hat Developer Hub, you can login with the credentials printed on the sticker attached to your laptop.
 
-{devspace_url}
+{devhub_url}
